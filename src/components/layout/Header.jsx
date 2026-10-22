@@ -1,83 +1,124 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Menu, X } from 'lucide-react'
+import { NavLink, useLocation } from 'react-router-dom'
+import Logo from '../common/Logo'
+
+const navItems = [
+  { label: 'Inicio', path: '/' },
+  { label: 'Servicios', path: '/servicios' },
+  { label: 'Proyectos', path: '/proyectos' },
+  { label: 'Equipo', path: '/equipo' },
+  { label: 'Contacto', path: '/contacto' },
+]
 
 const Header = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      setIsScrolled(window.scrollY > 20)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-  const navItems = [
-    { label: 'Inicio', path: '/' },
-    { label: 'Servicios', path: '/servicios' },
-    { label: 'Proyectos', path: '/proyectos' },
-    { label: 'Equipo', path: '/equipo' },
-    { label: 'Contacto', path: '/contacto' }
-  ];
+  // Cerrar el menú móvil y volver arriba al cambiar de página
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
-  const isActive = (path) => location.pathname === path;
+  useEffect(() => {
+    if (!isMobileMenuOpen) return
+    const handleKey = e => e.key === 'Escape' && setIsMobileMenuOpen(false)
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [isMobileMenuOpen])
+
+  const isSolid = isScrolled || isMobileMenuOpen
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'bg-white/80 backdrop-blur-xl shadow-sm' : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-light text-gray-900 hover:opacity-80 transition-opacity">
-            Numma
-          </Link>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow] duration-300 ${
+        isSolid
+          ? 'bg-white/95 shadow-[0_1px_0_rgb(229_229_229)] backdrop-blur-md'
+          : 'bg-transparent'
+      }`}
+    >
+      <div
+        className={`shell flex items-center justify-between transition-[height] duration-300 ${
+          isSolid ? 'h-16' : 'h-20'
+        }`}
+      >
+        <Logo />
 
-          <nav className="hidden md:flex space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className={`text-sm font-medium transition-all duration-300 hover:text-blue-600 ${
-                  isActive(item.path) 
-                    ? 'text-blue-600 border-b-2 border-blue-600 pb-1' 
-                    : 'text-gray-700'
-                }`}
-              >
-                {item.label}
-              </Link>
+        <nav className="hidden md:block" aria-label="Principal">
+          <ul className="flex items-center gap-8">
+            {navItems.map(item => (
+              <li key={item.path}>
+                <NavLink
+                  to={item.path}
+                  end
+                  className={({ isActive }) =>
+                    `relative py-2 text-[17px] font-semibold transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:bg-accent-600 after:transition-transform after:duration-200 ${
+                      isActive
+                        ? 'text-brand-900 after:scale-x-100'
+                        : 'text-neutral-600 after:scale-x-0 hover:text-brand-900'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              </li>
             ))}
-          </nav>
+          </ul>
+        </nav>
 
-          <button
-            className="md:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 py-4 border-t border-gray-200 bg-white/95 backdrop-blur-xl rounded-xl">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
-                className={`block py-3 px-4 text-gray-700 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-all ${
-                  isActive(item.path) ? 'text-blue-600 bg-blue-50' : ''
-                }`}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        )}
+        <button
+          type="button"
+          className="-mr-2 grid h-11 w-11 place-items-center rounded text-neutral-800 transition-colors hover:bg-neutral-900/5 md:hidden"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-menu"
+          aria-label={isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
-    </header>
-  );
-};
 
-export default Header;
+      {isMobileMenuOpen && (
+        <nav
+          id="mobile-menu"
+          className="border-t border-neutral-200 bg-white md:hidden"
+          aria-label="Principal"
+        >
+          <ul className="shell py-2">
+            {navItems.map(item => (
+              <li
+                key={item.path}
+                className="border-b border-neutral-100 last:border-0"
+              >
+                <NavLink
+                  to={item.path}
+                  end
+                  className={({ isActive }) =>
+                    `flex py-4 text-lg font-semibold ${
+                      isActive ? 'text-brand-900' : 'text-neutral-600'
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </header>
+  )
+}
+
+export default Header

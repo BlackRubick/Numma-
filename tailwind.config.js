@@ -7,6 +7,33 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Paleta tomada del logo: tinta #0e0e0e sobre papel #eaeae8
+        brand: {
+          50: '#f3f3f1',
+          100: '#eaeae8',
+          200: '#dcdcd9',
+          300: '#c4c4c0',
+          400: '#9a9a96',
+          500: '#6b6b68',
+          600: '#454543',
+          700: '#262626',
+          800: '#171717',
+          900: '#0e0e0e',
+          950: '#080808'
+        },
+        // Acento azul eléctrico sobre la base negra del logo
+        accent: {
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a'
+        },
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',
@@ -33,21 +60,9 @@ export default {
           900: '#0f172a',
           950: '#020617'
         },
-        accent: {
-          50: '#fdf4ff',
-          100: '#fae8ff',
-          200: '#f5d0fe',
-          300: '#f0abfc',
-          400: '#e879f9',
-          500: '#d946ef',
-          600: '#c026d3',
-          700: '#a21caf',
-          800: '#86198f',
-          900: '#701a75'
-        }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+        sans: ['"Source Sans 3"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'Monaco', 'monospace']
       },
       fontSize: {

@@ -12,7 +12,7 @@ const Team = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           <h2 className="text-4xl md:text-5xl font-thin text-gray-900 mb-6">
-            Conoce al equipo detrás de CFE Aeon
+            Conoce al equipo detrás de Numma
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Profesionales apasionados por la innovación tecnológica y el impacto social

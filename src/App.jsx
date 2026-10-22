@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { ChevronRight, Menu, X, Activity, Code, Brain, Shield, Users, Mail, Phone, MapPin, ArrowRight, Star, Globe, Zap, Heart, Target, Eye } from 'lucide-react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importar páginas
 import HomePage from './pages/HomePage';
@@ -8,26 +7,34 @@ import ServicesPage from './pages/ServicesPage';
 import ProjectsPage from './pages/ProjectsPage';
 import TeamPage from './pages/TeamPage';
 import ContactPage from './pages/ContactPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
 
 // Importar componentes de layout
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import WhatsAppButton from './components/common/WhatsAppButton';
+import ConsentBanner from './components/common/ConsentBanner';
 
 const App = () => {
   return (
-    <Router>
-      <div className="min-h-screen bg-white">
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <div className="flex min-h-screen flex-col bg-white">
         <Header />
-        <main>
+        <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/servicios" element={<ServicesPage />} />
             <Route path="/proyectos" element={<ProjectsPage />} />
             <Route path="/equipo" element={<TeamPage />} />
             <Route path="/contacto" element={<ContactPage />} />
+            <Route path="/privacidad" element={<PrivacyPage />} />
+            <Route path="/terminos" element={<TermsPage />} />
           </Routes>
         </main>
         <Footer />
+        <WhatsAppButton />
+        <ConsentBanner />
       </div>
     </Router>
   );

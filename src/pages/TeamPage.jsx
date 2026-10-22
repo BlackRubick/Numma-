@@ -1,9 +1,7 @@
 import React from 'react'
-import { useScrollReveal } from '../hooks/useScrollReveal'
 import {
   Mail,
   Linkedin,
-  Github,
   Award,
   MapPin,
   Calendar,
@@ -11,16 +9,53 @@ import {
   Heart,
   Star,
   Users,
+  Check,
+  GraduationCap,
+  Wrench,
+  FolderOpen,
+  Languages,
 } from 'lucide-react'
-import felipe from '../../public/images/team/felipe.jpeg'
+import PageHeader from '../components/common/PageHeader'
+import Reveal from '../components/common/Reveal'
+import FeatureGrid from '../components/common/FeatureGrid'
+import FallbackImage from '../components/common/FallbackImage'
+import CTASection from '../components/ui/CTASection'
+import CountUp from '../components/common/CountUp'
 
-const persona = {
-  image: felipe,
+const MemberPhoto = ({ src, name }) => {
+  const initials = name
+    .split(' ')
+    .slice(0, 2)
+    .map(part => part[0])
+    .join('')
+
+  return (
+    <div className="aspect-[4/5] overflow-hidden rounded-3xl bg-brand-50">
+      <FallbackImage
+        src={src}
+        alt={name}
+        className="h-full w-full object-cover"
+        fallback={
+          <span className="text-5xl font-bold text-neutral-400">
+            {initials}
+          </span>
+        }
+      />
+    </div>
+  )
 }
 
-const TeamPage = () => {
-  const [ref, isVisible] = useScrollReveal()
+const DetailBlock = ({ title, icon: Icon, children }) => (
+  <div className="grid grid-cols-1 gap-3 border-t border-neutral-200 py-6 md:grid-cols-[13rem_1fr] md:gap-6 lg:grid-cols-1 lg:gap-3 xl:grid-cols-[13rem_1fr] xl:gap-6">
+    <h4 className="flex items-center gap-2.5 text-base">
+      <Icon className="h-5 w-5 text-accent-600" aria-hidden="true" />
+      {title}
+    </h4>
+    <div>{children}</div>
+  </div>
+)
 
+const TeamPage = () => {
   const teamMembers = [
     {
       id: 1,
@@ -32,8 +67,7 @@ const TeamPage = () => {
         'Ing. en Desarrollo de Software - Universidad Politecnica de Chiapas',
       specialization:
         'Desarrollo full-stack y arquitectura de sistemas escalables',
-      image:
-        'https://media.licdn.com/dms/image/v2/D5603AQF9MR-_jnFffQ/profile-displayphoto-shrink_800_800/B56ZZ5OcpqHUAc-/0/1745790553838?e=1758153600&v=beta&t=-e1nr09Sl5VqoQN2ADyfbeoVDUgQi36zOsmE06_2JIw',
+      image: '/images/team/cesar.jpeg',
       description:
         'Desarrollador full-stack especializado en la creación de aplicaciones web y móviles robustas y escalables. Experto en tecnologías modernas y metodologías ágiles para el desarrollo de software empresarial.',
       skills: [
@@ -88,376 +122,324 @@ const TeamPage = () => {
 
   const companyValues = [
     {
-      icon: <Code className="w-8 h-8" />,
+      icon: <Code />,
       title: 'Excelencia Técnica',
       description:
         'Nos comprometemos con los más altos estándares de calidad en cada línea de código.',
     },
     {
-      icon: <Heart className="w-8 h-8" />,
+      icon: <Heart />,
       title: 'Impacto Social',
       description:
         'Desarrollamos tecnología que mejora la vida de las personas y contribuye al bienestar social.',
     },
     {
-      icon: <Star className="w-8 h-8" />,
+      icon: <Star />,
       title: 'Innovación Continua',
       description:
         'Siempre buscamos las últimas tecnologías para crear soluciones disruptivas.',
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users />,
       title: 'Trabajo en Equipo',
       description:
         'Creemos en la colaboración y el intercambio de conocimientos para lograr los mejores resultados.',
     },
   ]
 
-  const teamStats = [
-    { label: 'Años de Experiencia Combinada', value: '14+' },
-    { label: 'Certificaciones Profesionales', value: '12+' },
-    { label: 'Proyectos Liderados', value: '25+' },
-    { label: 'Tecnologías Dominadas', value: '30+' },
+  const culturePoints = [
+    'Flexibilidad y balance trabajo-vida',
+    'Oportunidades de crecimiento profesional',
+    'Ambiente colaborativo e inclusivo',
+    'Apoyo para certificaciones y formación',
   ]
 
+  const hiringReasons = [
+    {
+      value: '+3 años',
+      text: 'De experiencia en desarrollo de software y soluciones médicas',
+    },
+    {
+      value: 'Especialistas',
+      text: 'Equipo multidisciplinario en ingeniería biomédica y software',
+    },
+    {
+      value: '100%',
+      text: 'Comprometidos con la calidad, innovación y atención personalizada',
+    },
+  ]
+
+  const photo = id =>
+    `https://images.unsplash.com/photo-${id}?w=1200&q=80&fit=crop`
+
   return (
-    <div className="pt-20">
-      {/* Hero Section */}
-      <section
-        ref={ref}
-        className="py-24 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800"
-      >
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div
-            className={`transition-all duration-1000 ${
-              isVisible
-                ? 'opacity-100 translate-y-0'
-                : 'opacity-0 translate-y-8'
-            }`}
-          >
-            <h1 className="text-4xl md:text-6xl font-thin text-white mb-6">
-              Nuestro Equipo
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
-              Conoce a los profesionales apasionados por la innovación
-              tecnológica y el impacto social que están detrás de CFE Aeon
-            </p>
+    <div>
+      <PageHeader
+        title="Nuestro Equipo"
+        description="Conoce a los profesionales apasionados por la innovación tecnológica y el impacto social que están detrás de Numma"
+        image={photo('1522071820081-009f0129c71c')}
+        imageAlt="Equipo colaborando alrededor de una mesa de trabajo"
+      />
 
-            {/* Team Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-              {teamStats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-blue-400 mb-2">
-                    {stat.value}
+      {/* Integrantes */}
+      <section className="py-20 sm:py-24">
+        <div className="container-page space-y-20 sm:space-y-28">
+          {teamMembers.map(member => (
+            <Reveal
+              as="article"
+              key={member.id}
+              className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16"
+              aria-labelledby={`member-${member.id}`}
+            >
+              {/* Ficha */}
+              <div className="lg:col-span-4">
+                <div className="sm:grid sm:grid-cols-[minmax(0,15rem)_1fr] sm:items-end sm:gap-8 lg:sticky lg:top-28 lg:block">
+                  <div className="max-w-sm">
+                    <MemberPhoto src={member.image} name={member.name} />
                   </div>
-                  <div className="text-gray-300 text-sm">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+                  <div>
+                    <h3
+                      id={`member-${member.id}`}
+                      className="mt-6 text-2xl sm:mt-0 lg:mt-6"
+                    >
+                      {member.name}
+                    </h3>
+                    <p className="mt-1 font-semibold text-brand-900">
+                      {member.role}
+                    </p>
+                    <p className="text-neutral-600">{member.profession}</p>
 
-      {/* Team Members */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="space-y-16">
-            {teamMembers.map((member, index) => (
-              <div
-                key={member.id}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-                }`}
-              >
-                {/* Photo and Basic Info */}
-                <div className={`${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl transform rotate-3"></div>
-                    <div className="relative bg-white rounded-3xl p-8 shadow-xl">
-                      <div className="text-center">
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-48 h-48 rounded-full mx-auto mb-6 object-cover shadow-lg"
+                    <ul className="mt-5 space-y-2 text-[15px] text-neutral-600">
+                      <li className="flex items-center gap-2.5">
+                        <MapPin
+                          className="h-4 w-4 text-neutral-400"
+                          aria-hidden="true"
                         />
-                        <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-                          {member.name}
-                        </h3>
-                        <p className="text-blue-600 font-medium mb-1">
-                          {member.role}
-                        </p>
-                        <p className="text-gray-600 mb-4">
-                          {member.profession}
-                        </p>
+                        {member.location}
+                      </li>
+                      <li className="flex items-center gap-2.5">
+                        <Calendar
+                          className="h-4 w-4 text-neutral-400"
+                          aria-hidden="true"
+                        />
+                        En Numma desde {member.joinedYear}
+                      </li>
+                    </ul>
 
-                        {/* Contact Links */}
-                        <div className="flex justify-center space-x-4 mb-6">
-                          <a
-                            href={`mailto:${member.email}`}
-                            className="p-3 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-600 transition-colors"
-                          >
-                            <Mail className="w-5 h-5" />
-                          </a>
-                          <a
-                            href={member.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-3 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-600 transition-colors"
-                          >
-                            <Linkedin className="w-5 h-5" />
-                          </a>
-                        </div>
-
-                        {/* Quick Info */}
-                        <div className="space-y-3 text-sm text-gray-600">
-                          <div className="flex items-center justify-center">
-                            <MapPin className="w-4 h-4 mr-2" />
-                            {member.location}
-                          </div>
-                          <div className="flex items-center justify-center">
-                            <Calendar className="w-4 h-4 mr-2" />
-                            En Numma desde {member.joinedYear}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Detailed Information */}
-                <div
-                  className={`${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}
-                >
-                  <div className="space-y-8">
-                    {/* Experience and Education */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Experiencia y Formación
-                      </h4>
-                      <div className="space-y-3">
-                        <p className="text-gray-600">
-                          <span className="font-medium">Experiencia:</span>{' '}
-                          {member.experience}
-                        </p>
-                        <p className="text-gray-600">
-                          <span className="font-medium">Educación:</span>{' '}
-                          {member.education}
-                        </p>
-                        <p className="text-gray-600">
-                          <span className="font-medium">Especialización:</span>{' '}
-                          {member.specialization}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Acerca de {member.name.split(' ')[0]}
-                      </h4>
-                      <p className="text-gray-600 leading-relaxed">
-                        {member.description}
-                      </p>
-                    </div>
-
-                    {/* Skills */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Habilidades Técnicas
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {member.skills.map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Achievements */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Logros y Certificaciones
-                      </h4>
-                      <ul className="space-y-2">
-                        {member.achievements.map((achievement, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-start text-gray-600"
-                          >
-                            <Award className="w-4 h-4 text-yellow-500 mr-2 mt-1 flex-shrink-0" />
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Projects */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Proyectos Destacados
-                      </h4>
-                      <div className="space-y-2">
-                        {member.projects.map((project, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center text-gray-600"
-                          >
-                            <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                            {project}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Languages */}
-                    <div>
-                      <h4 className="text-xl font-semibold text-gray-900 mb-4">
-                        Idiomas
-                      </h4>
-                      <div className="flex gap-2">
-                        {member.languages.map((language, idx) => (
-                          <span
-                            key={idx}
-                            className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
-                          >
-                            {language}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <a
+                        href={`mailto:${member.email}`}
+                        className="btn-primary h-11 px-5 text-[15px]"
+                      >
+                        <Mail className="h-4 w-4" aria-hidden="true" />
+                        Correo
+                      </a>
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-outline h-11 px-5 text-[15px]"
+                      >
+                        <Linkedin className="h-4 w-4" aria-hidden="true" />
+                        LinkedIn
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+
+              {/* Detalle */}
+              <div className="lg:col-span-8">
+                <h4 className="text-2xl">
+                  Acerca de {member.name.split(' ')[0]}
+                </h4>
+                <p className="mt-3 pb-8 text-lg leading-relaxed text-neutral-600 text-pretty">
+                  {member.description}
+                </p>
+
+                <DetailBlock
+                  title="Experiencia y Formación"
+                  icon={GraduationCap}
+                >
+                  <dl className="grid gap-4 sm:grid-cols-3">
+                    <div>
+                      <dt className="text-[15px] text-neutral-500">
+                        Experiencia
+                      </dt>
+                      <dd className="font-semibold text-brand-900">
+                        {member.experience}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[15px] text-neutral-500">
+                        Educación
+                      </dt>
+                      <dd className="font-semibold text-brand-900">
+                        {member.education}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[15px] text-neutral-500">
+                        Especialización
+                      </dt>
+                      <dd className="font-semibold text-brand-900">
+                        {member.specialization}
+                      </dd>
+                    </div>
+                  </dl>
+                </DetailBlock>
+
+                <DetailBlock title="Habilidades Técnicas" icon={Wrench}>
+                  <ul className="flex flex-wrap gap-2">
+                    {member.skills.map(skill => (
+                      <li
+                        key={skill}
+                        className="rounded-full bg-brand-50 px-3 py-1 text-[15px] font-medium text-neutral-600"
+                      >
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </DetailBlock>
+
+                <DetailBlock title="Logros y Certificaciones" icon={Award}>
+                  <ul className="space-y-2">
+                    {member.achievements.map(achievement => (
+                      <li
+                        key={achievement}
+                        className="flex items-start gap-2.5 text-neutral-600"
+                      >
+                        <Check
+                          className="mt-1 h-4 w-4 shrink-0 text-accent-600"
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                        />
+                        {achievement}
+                      </li>
+                    ))}
+                  </ul>
+                </DetailBlock>
+
+                <DetailBlock title="Proyectos Destacados" icon={FolderOpen}>
+                  <ul className="space-y-2">
+                    {member.projects.map(project => (
+                      <li
+                        key={project}
+                        className="flex items-start gap-2.5 text-neutral-600"
+                      >
+                        <Check
+                          className="mt-1 h-4 w-4 shrink-0 text-accent-600"
+                          strokeWidth={2.5}
+                          aria-hidden="true"
+                        />
+                        {project}
+                      </li>
+                    ))}
+                  </ul>
+                </DetailBlock>
+
+                <DetailBlock title="Idiomas" icon={Languages}>
+                  <p className="text-neutral-600">
+                    {member.languages.join(' · ')}
+                  </p>
+                </DetailBlock>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* Company Values */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-thin text-gray-900 mb-6">
+      {/* Valores */}
+      <section className="panel-inset bg-brand-50 py-20 sm:py-24">
+        <div className="container-page">
+          <Reveal className="mb-12 max-w-2xl">
+            <h2 className="text-3xl leading-tight sm:text-[2.6rem]">
               Nuestros Valores
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="mt-4 text-xl leading-relaxed text-neutral-600">
               Los principios que guían cada decisión y proyecto que emprendemos
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {companyValues.map((value, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105"
-              >
-                <div className="text-blue-600 mb-6">{value.icon}</div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {value.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          </Reveal>
+          <FeatureGrid items={companyValues} />
         </div>
       </section>
 
-      {/* Culture Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl font-thin text-gray-900 mb-6">
-                Nuestra Cultura
-              </h2>
-              <p className="text-gray-600 mb-6 leading-relaxed">
+      {/* Cultura */}
+      <section className="py-20 sm:py-28">
+        <div className="container-page grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-5">
+            <img
+              src="/images/logonuma.jpeg"
+              alt="logo Numma"
+              loading="lazy"
+              className="mx-auto aspect-square w-full max-w-sm rounded-3xl object-cover lg:max-w-none"
+            />
+          </Reveal>
+          <Reveal delay={100} className="lg:col-span-7">
+            <h2 className="text-3xl leading-tight sm:text-[2.6rem]">
+              Nuestra Cultura
+            </h2>
+            <div className="mt-6 space-y-4 text-lg leading-relaxed text-neutral-600 text-pretty">
+              <p>
                 En Numma fomentamos un ambiente de trabajo colaborativo,
                 creativo e inclusivo. Creemos que la diversidad de pensamiento y
                 experiencia es fundamental para la innovación. Nuestro equipo
                 trabaja con pasión para crear soluciones que realmente impacten
                 en la vida de las personas.
               </p>
-              <p className="text-gray-600 mb-8 leading-relaxed">
+              <p>
                 Valoramos el aprendizaje continuo, la experimentación y el
                 crecimiento profesional. Cada miembro de nuestro equipo tiene la
                 oportunidad de liderar proyectos, proponer nuevas ideas y
                 contribuir al éxito colectivo de la empresa.
               </p>
-
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
-                  <span className="text-gray-700">
-                    Flexibilidad y balance trabajo-vida
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
-                  <span className="text-gray-700">
-                    Oportunidades de crecimiento profesional
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
-                  <span className="text-gray-700">
-                    Ambiente colaborativo e inclusivo
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
-                  <span className="text-gray-700">
-                    Apoyo para certificaciones y formación
-                  </span>
-                </div>
-              </div>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl transform -rotate-3"></div>
-              <div className="relative bg-white rounded-3xl p-8 shadow-xl">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-                  ¿Por qué contratarnos?
-                </h3>
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
-                      +3 años
-                    </div>
-                    <div className="text-gray-600">
-                      De experiencia en desarrollo de software y soluciones
-                      médicas
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-purple-600 mb-2">
-                      Especialistas
-                    </div>
-                    <div className="text-gray-600">
-                      Equipo multidisciplinario en ingeniería biomédica y
-                      software
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-green-600 mb-2">
-                      100%
-                    </div>
-                    <div className="text-gray-600">
-                      Comprometidos con la calidad, innovación y atención
-                      personalizada
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+              {culturePoints.map(point => (
+                <li
+                  key={point}
+                  className="flex items-start gap-2.5 font-medium text-brand-900"
+                >
+                  <Check
+                    className="mt-1 h-4 w-4 shrink-0 text-accent-600"
+                    strokeWidth={2.5}
+                    aria-hidden="true"
+                  />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
+
+      {/* Por qué contratarnos */}
+      <section className="pb-4">
+        <div className="container-page">
+          <Reveal
+            as="h2"
+            className="mb-10 text-3xl leading-tight sm:text-[2.6rem]"
+          >
+            ¿Por qué contratarnos?
+          </Reveal>
+          <dl className="grid grid-cols-1 gap-5 md:grid-cols-3">
+            {hiringReasons.map((reason, index) => (
+              <Reveal key={reason.value} delay={index * 80} className="flex">
+                <div className="card w-full p-8">
+                  <dt className="text-4xl font-bold text-accent-600">
+                    <CountUp value={reason.value} />
+                  </dt>
+                  <dd className="mt-3 text-lg leading-relaxed text-neutral-600">
+                    {reason.text}
+                  </dd>
+                </div>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <CTASection />
     </div>
   )
 }
