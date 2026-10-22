@@ -1,8 +1,9 @@
 import React from 'react'
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react'
+import { Mail, Phone, MapPin, ArrowRight, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import PageHeader from '../components/common/PageHeader'
 import Reveal from '../components/common/Reveal'
+import { whatsappUrl } from '../data/whatsapp'
 
 const contactItems = [
   {
@@ -13,9 +14,9 @@ const contactItems = [
   },
   {
     icon: Phone,
-    label: 'Teléfono',
+    label: 'WhatsApp',
     value: '+52 962 3546362',
-    href: 'tel:+529623546362',
+    href: whatsappUrl,
   },
   {
     icon: MapPin,
@@ -36,68 +37,39 @@ const ContactPage = () => {
 
       <section className="py-20 sm:py-24">
         <div className="container-page grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Formulario */}
+          {/* WhatsApp */}
           <Reveal className="lg:col-span-7">
-            <h2 className="mb-8 text-3xl leading-tight sm:text-[2.2rem]">
-              Envíanos un mensaje
-            </h2>
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div>
-                  <label htmlFor="contact-name" className="field-label">
-                    Nombre
-                  </label>
-                  <input
-                    id="contact-name"
-                    type="text"
-                    autoComplete="name"
-                    className="field h-12"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="contact-email" className="field-label">
-                    Email
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    autoComplete="email"
-                    className="field h-12"
-                  />
-                </div>
-              </div>
+            <div className="flex h-full flex-col justify-between gap-10 rounded-3xl bg-brand-50 p-6 sm:p-10">
               <div>
-                <label htmlFor="contact-company" className="field-label">
-                  Empresa
-                </label>
-                <input
-                  id="contact-company"
-                  type="text"
-                  autoComplete="organization"
-                  className="field h-12"
-                />
-              </div>
-              <div>
-                <label htmlFor="contact-message" className="field-label">
-                  Proyecto
-                </label>
-                <textarea
-                  id="contact-message"
-                  rows="6"
-                  placeholder="Cuéntanos sobre tu proyecto..."
-                  className="field resize-y py-3 leading-relaxed"
-                ></textarea>
-              </div>
-              <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:gap-6">
-                <button
-                  type="submit"
-                  className="btn-primary w-full shrink-0 sm:w-auto"
+                <span
+                  className="grid h-14 w-14 place-items-center rounded-2xl bg-[#25D366] text-white"
+                  aria-hidden="true"
                 >
-                  Enviar mensaje
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </button>
-                <p className="text-[15px] leading-snug text-neutral-500">
-                  Al enviar tu mensaje aceptas nuestro{' '}
+                  <MessageCircle className="h-7 w-7" />
+                </span>
+                <h2 className="mt-6 text-3xl leading-tight sm:text-[2.2rem]">
+                  Escríbenos por WhatsApp
+                </h2>
+                <p className="mt-4 max-w-lg text-lg leading-relaxed text-neutral-600 text-pretty">
+                  Cuéntanos sobre tu proyecto y te responderemos directamente
+                  para darte información y una cotización personalizada.
+                </p>
+              </div>
+              <div>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn group w-full bg-[#25D366] text-white hover:bg-[#1ebe5a] sm:w-auto"
+                >
+                  Iniciar conversación
+                  <ArrowRight
+                    className="h-5 w-5 transition-transform group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+                <p className="mt-4 text-[15px] leading-snug text-neutral-500">
+                  Al contactarnos aceptas nuestro{' '}
                   <Link
                     to="/privacidad"
                     className="font-semibold text-brand-900 underline underline-offset-4 hover:text-accent-600"
@@ -107,7 +79,7 @@ const ContactPage = () => {
                   .
                 </p>
               </div>
-            </form>
+            </div>
           </Reveal>
 
           {/* Datos de contacto */}
@@ -136,6 +108,9 @@ const ContactPage = () => {
                   <a
                     key={label}
                     href={href}
+                    {...(href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
                     className="group flex items-center gap-3 py-5 sm:gap-4"
                   >
                     {content}
@@ -149,20 +124,6 @@ const ContactPage = () => {
                   </div>
                 )
               })}
-            </div>
-
-            <div className="rounded-3xl bg-accent-600 p-7 text-white">
-              <h3 className="text-2xl text-white">
-                ¿Necesitas una cotización?
-              </h3>
-              <p className="mt-2 text-lg leading-relaxed text-accent-100">
-                No dudes en llamarnos, te brindaremos una atención ágil y
-                personalizada
-              </p>
-              <a href="tel:+529623546362" className="btn-white mt-6 w-full">
-                <Phone className="h-5 w-5" aria-hidden="true" />
-                +52 962 3546362
-              </a>
             </div>
 
             <div className="overflow-hidden rounded-3xl border border-neutral-200">

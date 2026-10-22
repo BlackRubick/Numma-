@@ -99,7 +99,7 @@ const TeamPage = () => {
       role: 'Co-fundador & CTO',
       profession: 'Ingeniero Biomédica',
       experience: '3 años de experiencia',
-      education: 'Ingeniería Biomédica - Universidad POlitecnica de Chiapas',
+      education: 'Ingeniería Biomédica - Universidad Politecnica de Chiapas',
       specialization: 'Sistemas médicos digitales ',
       image: '/images/team/felipe.jpeg',
       description:
